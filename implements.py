@@ -108,4 +108,6 @@ class Ball(Basic):
     def alive(self):
         # ============================================
         # TODO: Implement a service that returns whether the ball is alive or not
-        pass
+         if self.rect.top > config.display_dimension[1]:
+          return False  # 공이 화면 밖으로 빠져나갔으므로 False 반환
+         return True  # 공이 화면 안에 남아있으면 True 반환
