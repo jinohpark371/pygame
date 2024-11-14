@@ -68,7 +68,25 @@ class Ball(Basic):
     def collide_block(self, blocks: list):
         # ============================================
         # TODO: Implement an event when the ball hits a block
-        pass
+        for block in blocks:
+            if self.rect.colliderect(block.rect) and block.alive:  # 블록과 충돌한 경우
+
+                # 공이 블록의 상하면에 충돌한 경우 반사 처리
+                if self.rect.centerx > block.rect.left and self.rect.centerx < block.rect.right:
+                    if self.rect.top < block.rect.bottom and self.rect.bottom > block.rect.top:
+                        block.collide()
+                        blocks.remove(block)
+                        self.dir = 360 - self.dir  # 상하 벽에서 반사 (가로면 충돌)
+
+
+
+                # 공이 블록의 좌우면에 충돌한 경우 반사 처리
+                elif self.rect.centery > block.rect.top and self.rect.centery < block.rect.bottom:
+                    if self.rect.left < block.rect.right and self.rect.right > block.rect.left:
+                        block.collide()
+                        blocks.remove(block)
+                        self.dir=180-self.dir
+                break
 
     def collide_paddle(self, paddle: Paddle) -> None:
         if self.rect.colliderect(paddle.rect):
